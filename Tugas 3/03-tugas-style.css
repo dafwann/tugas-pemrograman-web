@@ -241,3 +241,99 @@ body {
 .showcase-card__footer a:hover {
     text-decoration: underline;
 }
+
+
+/* ------------------------------------------------------------
+   8. MODIFIER DAN PEMBUKTIAN SPESIFISITAS
+   .showcase-card__description                         -> (0,0,1,0)
+   .showcase-card--featured .showcase-card__description -> (0,0,2,0)
+ 
+   Pemilih gabungan dua kelas bernilai lebih tinggi sehingga
+   menimpa gaya deskripsi bawaan tanpa penanda !important.
+   ------------------------------------------------------------ */
+.showcase-card--featured {
+    border-color: #2e5ac4;
+}
+ 
+.showcase-card--featured .showcase-card__description {
+    color: #1a204a;
+    font-weight: 600;
+    font-style: italic;
+    background-color: #eef2fd;
+    border-left: 4px solid #2e5ac4;
+    padding: 10px 14px;
+    border-radius: 0 6px 6px 0;
+}
+ 
+/* Judul dan label ikut ditegaskan, juga bernilai (0,0,2,0) */
+.showcase-card--featured .showcase-card__title {
+    color: #16306e;
+}
+ 
+.showcase-card--featured .showcase-card__label {
+    color: #ffffff;
+    background-color: #2e5ac4;
+}
+ 
+/* ------------------------------------------------------------
+   9. PENYESUAIAN RESPONSIF
+   ------------------------------------------------------------ */
+@media (max-width: 767px) {
+    body {
+        padding: 12px;
+    }
+ 
+    .showcase-card {
+        margin: 20px auto;
+        border-radius: 8px;
+    }
+ 
+    .showcase-card__header {
+        padding: 18px;
+    }
+ 
+    .showcase-card__title {
+        font-size: 1.5rem;
+    }
+ 
+    .showcase-card__cover,
+    .showcase-card__video-wrapper {
+        width: calc(100% - 36px);
+    }
+ 
+    .showcase-card__info {
+        padding: 12px 18px;
+    }
+ 
+    .showcase-card__episode {
+        font-size: 1.15rem;
+    }
+ 
+    .showcase-card__summary,
+    .showcase-card__audio {
+        margin: 18px;
+        padding: 18px;
+    }
+ 
+    .showcase-card__footer {
+        padding: 18px;
+    }
+ 
+    /* Efek angkat dinonaktifkan pada layar sentuh */
+    .showcase-card:hover {
+        transform: none;
+    }
+}
+ 
+/* Preferensi pengguna yang meminimalkan animasi */
+@media (prefers-reduced-motion: reduce) {
+    .showcase-card,
+    .showcase-card__description {
+        transition: none;
+    }
+ 
+    .showcase-card:hover {
+        transform: none;
+    }
+}
+ 
