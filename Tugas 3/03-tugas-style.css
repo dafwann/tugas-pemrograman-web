@@ -93,3 +93,151 @@ body {
     width: 100%;
     height: auto;                      /* menjaga rasio aspek */
 }
+
+
+/* ------------------------------------------------------------
+   5. ELEMENT: INFORMASI EPISODE
+   ------------------------------------------------------------ */
+.showcase-card__info {
+    padding: 12px 24px;
+}
+ 
+.showcase-card__episode {
+    font-size: 1.3rem;
+    color: #1a204a;
+}
+ 
+.showcase-card__topic {
+    margin-top: 4px;
+    color: #666;
+}
+ 
+/* ------------------------------------------------------------
+   6. ELEMENT: BLOK MEDIA (VIDEO, RINGKASAN, AUDIO)
+   ------------------------------------------------------------ */
+.showcase-card__video-wrapper {
+    width: calc(100% - 48px);
+    margin: 20px auto;
+}
+ 
+.showcase-card__video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: #000000;
+    border-radius: 8px;
+}
+ 
+.showcase-card__summary {
+    margin: 20px 24px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+ 
+.showcase-card__summary-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #777;
+}
+ 
+.showcase-card__summary-title {
+    margin-top: 4px;
+    font-size: 1.2rem;
+    color: #1a204a;
+}
+ 
+.showcase-card__summary-text {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #666;
+}
+ 
+.showcase-card__points {
+    margin-top: 14px;
+    padding-left: 0;
+    list-style: none;
+}
+ 
+.showcase-card__point {
+    position: relative;
+    margin-top: 8px;
+    padding-left: 20px;
+    font-size: 0.92rem;
+    color: #555;
+}
+ 
+.showcase-card__point::before {
+    content: "\25B8";                  /* penanda daftar manual */
+    position: absolute;
+    left: 0;
+    color: #2e5ac4;
+}
+ 
+.showcase-card__point code {
+    padding: 1px 6px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.88em;
+    color: #1a204a;
+    background-color: #eef1f7;
+    border-radius: 4px;
+}
+ 
+.showcase-card__audio {
+    margin: 20px 24px;
+    padding: 20px;
+    background-color: #f4f6f9;
+    border: 1px solid #e6e9ee;
+    border-radius: 8px;
+}
+ 
+.showcase-card__audio-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #777;
+}
+ 
+.showcase-card__audio-title {
+    margin-top: 4px;
+    font-size: 1.15rem;
+    color: #1a204a;
+}
+ 
+.showcase-card__audio-description {
+    margin-top: 4px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    color: #666;
+}
+ 
+.showcase-card__audio-player {
+    width: 100%;
+}
+ 
+/* ------------------------------------------------------------
+   7. ELEMENT: KAKI KARTU
+   ------------------------------------------------------------ */
+.showcase-card__footer {
+    padding: 20px 24px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e6e9ee;
+    font-size: 0.88rem;
+    color: #666;
+}
+ 
+.showcase-card__footer p + p {
+    margin-top: 8px;
+}
+ 
+.showcase-card__footer a {
+    color: #2563eb;
+    text-decoration: none;
+}
+ 
+.showcase-card__footer a:hover {
+    text-decoration: underline;
+}
