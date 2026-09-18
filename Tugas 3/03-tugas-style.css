@@ -18,3 +18,60 @@ body {
     background-color: #f4f6f9;
     padding: 20px;
 }
+
+/* ------------------------------------------------------------
+   2. BLOCK: KARTU UTAMA
+   Margin terpusat, sudut melengkung, bayangan, dan transisi
+   lembut saat kursor diarahkan ke kartu.
+   ------------------------------------------------------------ */
+.showcase-card {
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    border: 1px solid #e6e9ee;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+ 
+.showcase-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+}
+ 
+/* ------------------------------------------------------------
+   3. ELEMENT: KEPALA KARTU
+   ------------------------------------------------------------ */
+.showcase-card__header {
+    padding: 22px 24px 14px;
+}
+ 
+.showcase-card__label {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #1a204a;
+    background-color: #e7ecfb;
+    border-radius: 999px;
+}
+ 
+.showcase-card__title {
+    margin-bottom: 8px;
+    font-size: 1.8rem;
+    color: #1a204a;
+}
+ 
+/* Gaya dasar deskripsi -> spesifisitas (0,0,1,0) */
+.showcase-card__description {
+    color: #666;
+    font-weight: 400;
+    font-style: normal;
+    border-left: 4px solid transparent;
+    padding-left: 0;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
