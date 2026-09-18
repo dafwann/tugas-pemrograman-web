@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kartu multimedia e-learning: materi pengenalan CSS dalam bentuk video, audio, dan sampul art direction.">
+
+    <title>Pemutar Media Kuliah Responsif | Pengenalan CSS</title>
+
+    <link rel="stylesheet" href="03-tugas-style.css">
+</head>
+
+<body>
+
+    <main>
+        <!--
+            Pola BEM:
+            Block    -> .showcase-card
+            Element  -> .showcase-card__*
+            Modifier -> .showcase-card--featured (kelas status tambahan)
+        -->
+        <article class="showcase-card showcase-card--featured">
+
+            <header class="showcase-card__header">
+                <span class="showcase-card__label">Materi Pekan 3</span>
+
+                <h1 class="showcase-card__title">
+                    Pengenalan CSS
+                </h1>
+
+                <!--
+                    Teks deskripsi ini yang gayanya ditimpa oleh kelas status
+                    .showcase-card--featured (lihat bagian spesifisitas di CSS).
+                -->
+                <p class="showcase-card__description">
+                    Mengenal Cascading Style Sheets sebagai bahasa pengatur tampilan
+                    halaman web, mulai dari alasan pemisahan struktur dan presentasi
+                    hingga tiga cara penerapannya pada dokumen HTML.
+                </p>
+            </header>
+
+            <!--
+                ART DIRECTION
+                Dua source WebP dibedakan lewat media query lebar layar.
+                Peramban membaca source dari atas ke bawah dan memakai
+                kecocokan pertama; elemen img menjadi cadangan terakhir.
+            -->
+            <picture class="showcase-card__cover">
+                <source
+                    srcset="aset/Cover-desktop.webp"
+                    media="(min-width: 768px)"
+                    type="image/webp">
+
+                <source
+                    srcset="aset/Cover-mobile.webp"
+                    media="(max-width: 767px)"
+                    type="image/webp">
+
+                <img
+                    class="showcase-card__cover-img"
+                    src="aset/Cover-desktop.webp"
+                    alt="Sampul materi pengenalan Cascading Style Sheets"
+                    width="1600" height="800"
+                    loading="lazy" decoding="async">
+            </picture>
+
+            <section class="showcase-card__info">
+                <h2 class="showcase-card__episode">
+                    Episode 01 &mdash; Apa Itu CSS
+                </h2>
+
+                <p class="showcase-card__topic">
+                    Tekan tombol putar untuk menonton penjelasan video, atau gunakan
+                    pemutar audio di bawah bila ingin menyimak tanpa layar.
+                </p>
+            </section>
+
+            <section class="showcase-card__media">
+
+                <!--
+                    VIDEO
+                    Poster pratinjau + dua format cadangan (WebM lalu MP4).
+                    Bila keduanya gagal dimuat, tersedia tautan unduhan.
+                -->
+                <div class="showcase-card__video-wrapper">
+                    <video
+                        class="showcase-card__video"
+                        controls
+                        preload="metadata"
+                        poster="aset/Poster.jpg"
+                        width="1280" height="720">
+                        <source src="aset/Video.webm" type="video/webm">
+                        <source src="aset/Video.mp4" type="video/mp4">
+                        Peramban Anda tidak mendukung pemutaran video HTML5 natif.
+                        Silakan <a href="aset/Video.mp4">unduh berkas video ini</a>.
+                    </video>
+                </div>
+
+                <div class="showcase-card__summary">
+                    <span class="showcase-card__summary-label">Ringkasan Materi</span>
+
+                    <h2 class="showcase-card__summary-title">
+                        Tentang Video Ini
+                    </h2>
+
+                    <p class="showcase-card__summary-text">
+                        CSS adalah bahasa yang dipakai untuk mengatur tampilan dokumen
+                        HTML: warna, jenis huruf, jarak antarelemen, hingga penyesuaian
+                        tata letak pada berbagai ukuran layar. HTML mengurus struktur
+                        dan makna konten, sedangkan CSS mengurus presentasinya.
+                    </p>
+
+                    <p class="showcase-card__summary-text">
+                        Satu aturan gaya tersusun atas selector yang memilih elemen
+                        sasaran, lalu pasangan property dan value di dalam kurung
+                        kurawal yang menentukan aspek visual beserta nilainya.
+                    </p>
+
+                    <ul class="showcase-card__points">
+                        <li class="showcase-card__point">
+                            <strong>Inline</strong> &mdash; gaya ditulis langsung pada
+                            atribut <code>style</code> sebuah elemen.
+                        </li>
+                        <li class="showcase-card__point">
+                            <strong>Internal</strong> &mdash; gaya diletakkan dalam
+                            elemen <code>style</code> di bagian <code>head</code>.
+                        </li>
+                        <li class="showcase-card__point">
+                            <strong>Eksternal</strong> &mdash; gaya dipisah ke berkas
+                            <code>.css</code> tersendiri lalu dihubungkan dengan
+                            elemen <code>link</code>. Cara inilah yang dipakai halaman ini.
+                        </li>
+                    </ul>
+                </div>
+
+                <!--
+                    AUDIO
+                    Dua format cadangan: OGG lalu MP3.
+                -->
+                <div class="showcase-card__audio">
+                    <span class="showcase-card__audio-label">
+                        Alternatif Pembelajaran
+                    </span>
+
+                    <h2 class="showcase-card__audio-title">
+                        Hanya Audio Saja
+                    </h2>
+
+                    <p class="showcase-card__audio-description">
+                        Versi audio materi ini dapat diputar bila Anda ingin belajar
+                        sambil beraktivitas lain tanpa menonton video.
+                    </p>
+
+                    <audio
+                        class="showcase-card__audio-player"
+                        controls
+                        preload="metadata">
+                        <source src="aset/Audio.ogg" type="audio/ogg">
+                        <source src="aset/Audio.mp3" type="audio/mpeg">
+                        Peramban Anda tidak mendukung pemutaran audio HTML5 natif.
+                    </audio>
+                </div>
+            </section>
+
+            <footer class="showcase-card__footer">
+                <p>
+                    Sumber video:
+                    <a
+                        href="https://youtu.be/AGDDdsiZ0Ko"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        kanal YouTube W3Schools
+                    </a>
+                    &mdash; materi <em>CSS Introduction</em>.
+                </p>
+
+                <p>
+                    Sampul, poster, dan berkas audio dibuat sendiri sebagai aset
+                    latihan. Referensi materi: w3schools.com dan MDN Web Docs.
+                </p>
+
+                <p>
+                    <strong>Disclaimer:</strong>
+                    Halaman ini dibuat untuk keperluan tugas mata kuliah Pemrograman
+                    Website. Berkas video berasal dari sumber eksternal dan halaman
+                    ini bukan situs resmi dari pemilik media tersebut.
+                </p>
+            </footer>
+        </article>
+    </main>
+
+</body>
+</html>
