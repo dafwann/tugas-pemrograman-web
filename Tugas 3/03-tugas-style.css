@@ -75,3 +75,21 @@ body {
     padding-left: 0;
     transition: color 0.3s ease, padding-left 0.3s ease;
 }
+
+
+/* ------------------------------------------------------------
+   4. ELEMENT: SAMPUL ART DIRECTION
+   ------------------------------------------------------------ */
+.showcase-card__cover {
+    display: block;
+    width: calc(100% - 48px);
+    margin: 10px auto;
+    border-radius: 8px;
+    overflow: hidden;
+}
+ 
+.showcase-card__cover-img {
+    display: block;
+    width: 100%;
+    height: auto;                      /* menjaga rasio aspek */
+}
