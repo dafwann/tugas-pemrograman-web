@@ -66,7 +66,7 @@
 
             <section class="showcase-card__info">
                 <h2 class="showcase-card__episode">
-                    Episode 01 &mdash; Apa Itu CSS
+                    Apa Itu CSS
                 </h2>
 
                 <p class="showcase-card__topic">
@@ -82,7 +82,11 @@
                     Poster pratinjau + dua format cadangan (WebM lalu MP4).
                     Bila keduanya gagal dimuat, tersedia tautan unduhan.
                 -->
-                <div class="showcase-card__video-wrapper">
+                <div class="showcase-card__audio">
+                    <span class="showcase-card__audio-label">
+                        VIDEO: Penjelasan Materi Pengenalan CSS
+                    </span>
+
                     <video
                         class="showcase-card__video"
                         controls
@@ -95,12 +99,31 @@
                         Silakan <a href="aset/Video.mp4">unduh berkas video ini</a>.
                     </video>
                 </div>
+                
+                <!--
+                    AUDIO
+                    Dua format cadangan: OGG lalu MP3.
+                -->
+                <div class="showcase-card__audio">
+                    <span class="showcase-card__audio-label">
+                        AUDIO: Penjelasan Materi Pengenalan CSS
+                    </span>
+
+                    <audio
+                        class="showcase-card__audio-player"
+                        controls
+                        preload="metadata">
+                        <source src="aset/Audio.ogg" type="audio/ogg">
+                        <source src="aset/Audio.mp3" type="audio/mpeg">
+                        Peramban Anda tidak mendukung pemutaran audio HTML5 natif.
+                    </audio>
+                </div>
 
                 <div class="showcase-card__summary">
                     <span class="showcase-card__summary-label">Ringkasan Materi</span>
 
                     <h2 class="showcase-card__summary-title">
-                        Tentang Video Ini
+                        Cascading Style Sheets
                     </h2>
 
                     <p class="showcase-card__summary-text">
@@ -132,51 +155,22 @@
                         </li>
                     </ul>
                 </div>
-
-                <!--
-                    AUDIO
-                    Dua format cadangan: OGG lalu MP3.
-                -->
-                <div class="showcase-card__audio">
-                    <span class="showcase-card__audio-label">
-                        Alternatif Pembelajaran
-                    </span>
-
-                    <h2 class="showcase-card__audio-title">
-                        Ingin Mendengarkan Saja?
-                    </h2>
-
-                    <p class="showcase-card__audio-description">
-                        Versi audio materi ini dapat diputar bila Anda ingin belajar
-                        tanpa menonton video.
-                    </p>
-
-                    <audio
-                        class="showcase-card__audio-player"
-                        controls
-                        preload="metadata">
-                        <source src="aset/Audio.ogg" type="audio/ogg">
-                        <source src="aset/Audio.mp3" type="audio/mpeg">
-                        Peramban Anda tidak mendukung pemutaran audio HTML5 natif.
-                    </audio>
-                </div>
             </section>
 
             <footer class="showcase-card__footer">
                 <p>
-                    Sumber video:
+                    Referensi:
                     <a
                         href="https://youtu.be/AGDDdsiZ0Ko"
                         target="_blank"
                         rel="noopener noreferrer">
-                        kanal YouTube W3Schools
+                        YouTube W3Schools
                     </a>
                     &mdash; materi <em>CSS Introduction</em>.
                 </p>
 
                 <p>
-                    <strong>Disclaimer:</strong>
-                    Hak cipta video dan materi asli tetap milik W3Schools. Konten ini dibuat
+                    &copy; Hak cipta video dan materi asli tetap milik W3Schools. Konten ini dibuat
                     untuk tujuan pembelajaran saja.
                 </p>
             </footer>

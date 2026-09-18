@@ -192,15 +192,19 @@ body {
     border: 1px solid #e6e9ee;
     border-radius: 8px;
 }
- 
+
 .showcase-card__audio-label {
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #777;
+
+    /* Tambahan baru: */
+    display: block;       /* Biar bisa diatur jarak vertikalnya */
+    margin-bottom: 12px; /* Mendorong video ke bawah (teks jadi kelihatan lebih naik) */
+    text-align: center;  /* Memastikan posisi teks tepat di tengah */
 }
- 
 .showcase-card__audio-title {
     margin-top: 4px;
     font-size: 1.15rem;
