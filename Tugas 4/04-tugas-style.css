@@ -121,3 +121,273 @@ body {
   font-weight: 600;
 }
 
+/* 3. Layout makro (CSS Grid) */
+.portal {
+  display: grid;
+  grid-template-columns: 1fr;       /* ponsel: satu kolom bertumpuk */
+  grid-template-areas:
+    "sidebar"
+    "articles"
+    "info";
+  gap: var(--gap);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--gap) 16px;
+}
+
+.portal__sidebar  { grid-area: sidebar; }
+.portal__articles { grid-area: articles; }
+.portal__info     { grid-area: info; }
+
+.portal__sidebar,
+.portal__info {
+  display: grid;
+  gap: var(--gap);
+  align-content: start;
+}
+
+.portal__heading {
+  margin-bottom: 4px;
+  font-family: var(--font-serif);
+  font-size: 1.625rem;
+}
+
+.portal__lead {
+  margin-bottom: 16px;
+  color: var(--muted);
+}
+
+/* Panel untuk sidebar dan kolom kanan */
+.panel {
+  padding: 16px;
+  background-color: var(--navy-700);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  scroll-margin-top: 16px;
+}
+
+.panel__title {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.panel__text {
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+.panel__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panel__list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9375rem;
+}
+
+.panel__list li:last-child {
+  border-bottom: 0;
+}
+
+.panel__list + .btn {
+  margin-top: 16px;
+}
+
+.panel__link {
+  display: block;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.panel__link:hover,
+.panel__link:focus-visible {
+  color: var(--red-soft);
+}
+
+/* Chip tahun terbit */
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip-list__item {
+  display: block;
+  padding: 4px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.chip-list__item:hover,
+.chip-list__item:focus-visible {
+  border-color: var(--red);
+  color: var(--red-soft);
+}
+
+.info-list dt {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.info-list dd {
+  margin: 0 0 12px;
+}
+
+/* 4. Grid mikro untuk kartu artikel */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.cards-grid__item {
+  scroll-margin-top: 16px;
+}
+
+/* Kartu artikel (komponen Bootstrap + penyesuaian tema) */
+.article-card {
+  --bs-card-bg: var(--navy-700);
+  --bs-card-border-color: var(--line);
+  height: 100%;
+  scroll-margin-top: 16px;
+}
+
+/* Kartu yang dituju dari Kategori atau Tahun Terbit diberi penanda */
+.article-card:target,
+.cards-grid__item:target .article-card {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red);
+}
+
+.article-card .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.article-card__badge {
+  margin-bottom: 8px;
+  background-color: var(--red);
+}
+
+.article-card__title {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+
+.article-card__authors {
+  font-size: 0.875rem;
+}
+
+.article-card__meta {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.article-card .btn,
+.panel .btn {
+  --bs-btn-color: var(--red-soft);
+  --bs-btn-border-color: var(--red);
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-hover-bg: var(--red);
+  --bs-btn-hover-border-color: var(--red);
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-active-bg: var(--red-dark);
+  --bs-btn-active-border-color: var(--red-dark);
+}
+
+.article-card .btn {
+  margin-top: auto;                 /* tombol selalu rata di dasar kartu */
+}
+
+/* 5. Footer */
+.site-footer {
+  padding: 24px 16px;
+  background-color: var(--navy-800);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.site-footer p:last-child {
+  margin-bottom: 0;
+}
+
+/* 6. Tablet: mulai 768px */
+@media (min-width: 768px) {
+  .main-nav {
+    flex-wrap: nowrap;
+    padding: 12px 24px;
+  }
+
+  .main-nav__logo {
+    width: 64px;
+    height: 64px;
+  }
+
+  .main-nav__toggle {
+    display: none;                  /* menu selalu tampil */
+  }
+
+  .main-nav__panel {
+    display: block;
+    flex-basis: auto;
+  }
+
+  .main-nav__menu {
+    flex-direction: row;            /* tautan berjajar horizontal */
+    gap: 14px;
+  }
+
+  .main-nav__link {
+    padding: 8px 0;
+    font-size: 0.9375rem;
+    border-top: 0;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  .main-nav__link[aria-current] {
+    border-bottom-color: var(--red);
+    background-color: transparent;
+  }
+
+  .portal {
+    grid-template-columns: 200px 1fr;
+    grid-template-areas:
+      "sidebar articles"
+      "info    info";               /* kolom kanan turun ke bawah */
+  }
+
+  .portal__info {
+    grid-template-columns: 1fr 1fr; /* dua panel berdampingan di bawah artikel */
+  }
+}
+
+/* 7. Desktop: mulai 992px (tiga kolom) */
+@media (min-width: 992px) {
+  .portal {
+    grid-template-columns: 200px 1fr 220px;
+    grid-template-areas: "sidebar articles info";
+  }
+
+  .portal__info {
+    grid-template-columns: 1fr;
+  }
+}
