@@ -15,7 +15,7 @@
 
 body {
   background-color: var(--navy-900);
-  color: var(--ink);
+  color: var(--ink); 
 }
 
 /* 2. Header navigasi (Flexbox) */
