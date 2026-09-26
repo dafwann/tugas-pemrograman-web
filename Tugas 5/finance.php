@@ -38,8 +38,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!is_numeric($amountRaw) || (float) $amountRaw <= 0) {
             $errors[] = 'Jumlah transaksi harus berupa angka desimal positif.';
         }
+
+        if (empty($errors)) {
+            $amount = (float) $amountRaw;
+            $id     = uniqid('trx_', true);
+
+            $transaction = new Transaction($id, $type, $amount);
+            $balance     = (float) $_SESSION['balance'];
+
+            $processed = $transaction->process($balance);
+
+            if (!$processed) {
+                $errors[] = 'Saldo tidak mencukupi untuk melakukan penarikan.';
+            } else {
+                $_SESSION['balance']  = $balance;
+                $_SESSION['history'][] = $transaction->toArray();
+                $success = 'Transaksi berhasil diproses.';
+            }
+        }
     }
 
+    // Regenerasi token setelah setiap percobaan submit (mencegah replay).
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
