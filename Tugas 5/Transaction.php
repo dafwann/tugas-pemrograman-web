@@ -69,5 +69,5 @@ class Transaction
             'type'   => $this->type,
             'amount' => $this->amount,
         ];
-    } 
+    }
 }
