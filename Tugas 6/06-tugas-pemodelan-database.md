@@ -48,3 +48,30 @@ Entitas **Detail Peminjaman** muncul sebagai hasil normalisasi pada Bagian 3 sam
 | memuat | Peminjaman | Detail Peminjaman | 1 : N | Satu transaksi memuat satu atau lebih buku |
 | dipinjam dalam | Buku | Detail Peminjaman | 1 : N | Satu buku dapat muncul di banyak transaksi |
 | (turunan) | Peminjaman dan Buku | - | M : N | Diselesaikan melalui tabel `detail_peminjaman` |
+
+## 3. Simulasi Normalisasi: UNF dan 1NF
+
+### 3.1 Bentuk Tidak Normal (UNF)
+
+Tabel awal mencatat data mahasiswa, transaksi, dan seluruh buku yang dipinjam dalam satu baris besar. Kolom **Buku Dipinjam** memuat kelompok data berulang.
+
+| peminjaman_id | nim | Nama | Prodi | Nomor HP | Tgl Pinjam | Jatuh Tempo | Buku Dipinjam {ID Buku, ISBN, Judul, Pengarang, Tahun, ID Penerbit, Penerbit, Kota Penerbit, Tgl Kembali, Denda} |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| P001 | D121241017 | Fikri | Teknik Informatika | 081234567801 | 2026-09-01 | 2026-09-15 | {B001, 9786238100123, Pemrograman Web Dasar, Rizky Maulana, 2022, T001, Cakrawala Ilmu, Jakarta, 2026-09-10, 0}, {B002, 9786238100451, Algoritma dan Struktur Data, Nadia Prameswari, 2021, T002, Pustaka Inovasi, Makassar, 2026-09-18, 3000} |
+| P002 | D121241034 | Naufal | Teknik Informatika | 082145678902 | 2026-09-03 | 2026-09-17 | {B001, 9786238100123, Pemrograman Web Dasar, Rizky Maulana, 2022, T001, Cakrawala Ilmu, Jakarta, 2026-09-14, 0} |
+| P003 | D121241017 | Fikri | Teknik Informatika | 081234567801 | 2026-09-20 | 2026-10-04 | {B003, 9786238100789, Basis Data Relasional, Yoga Kurniawan, 2023, T001, Cakrawala Ilmu, Jakarta, NULL, 0} |
+
+Permasalahan: kolom **Buku Dipinjam** memuat lebih dari satu kelompok nilai dalam satu sel, sehingga data belum memenuhi prinsip atomisitas pada bentuk normal pertama (1NF).
+
+### 3.2 Konversi ke 1NF
+
+Syarat 1NF: setiap sel hanya berisi satu nilai atomik dan tidak ada kelompok data berulang. Setiap buku dalam satu transaksi dijadikan baris tersendiri. Kunci utama menjadi kunci komposit **(peminjaman_id, buku_id)**.
+
+| peminjaman_id (PK-1) | buku_id (PK-2) | nim | nama_mhs | program_studi | nomor_hp | tanggal_pinjam | tanggal_jatuh_tempo | isbn | judul | pengarang | tahun_terbit | penerbit_id | nama_penerbit | kota_penerbit | tanggal_kembali | denda |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| P001 | B001 | D121241017 | Fikri | Teknik Informatika | 081234567801 | 2026-09-01 | 2026-09-15 | 9786238100123 | Pemrograman Web Dasar | Rizky Maulana | 2022 | T001 | Cakrawala Ilmu | Jakarta | 2026-09-10 | 0 |
+| P001 | B002 | D121241017 | Fikri | Teknik Informatika | 081234567801 | 2026-09-01 | 2026-09-15 | 9786238100451 | Algoritma dan Struktur Data | Nadia Prameswari | 2021 | T002 | Pustaka Inovasi | Makassar | 2026-09-18 | 3000 |
+| P002 | B001 | D121241034 | Naufal | Teknik Informatika | 082145678902 | 2026-09-03 | 2026-09-17 | 9786238100123 | Pemrograman Web Dasar | Rizky Maulana | 2022 | T001 | Cakrawala Ilmu | Jakarta | 2026-09-14 | 0 |
+| P003 | B003 | D121241017 | Fikri | Teknik Informatika | 081234567801 | 2026-09-20 | 2026-10-04 | 9786238100789 | Basis Data Relasional | Yoga Kurniawan | 2023 | T001 | Cakrawala Ilmu | Jakarta | NULL | 0 |
+
+Permasalahan yang masih ditemukan adalah redundansi data. Data Fikri ditulis berulang pada setiap buku yang ia pinjam, dan data buku "Pemrograman Web Dasar" ditulis berulang pada setiap transaksi yang meminjamnya.
