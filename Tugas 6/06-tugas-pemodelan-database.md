@@ -75,3 +75,49 @@ Syarat 1NF: setiap sel hanya berisi satu nilai atomik dan tidak ada kelompok dat
 | P003 | B003 | D121241017 | Fikri | Teknik Informatika | 081234567801 | 2026-09-20 | 2026-10-04 | 9786238100789 | Basis Data Relasional | Yoga Kurniawan | 2023 | T001 | Cakrawala Ilmu | Jakarta | NULL | 0 |
 
 Permasalahan yang masih ditemukan adalah redundansi data. Data Fikri ditulis berulang pada setiap buku yang ia pinjam, dan data buku "Pemrograman Web Dasar" ditulis berulang pada setiap transaksi yang meminjamnya.
+
+## 4. Normalisasi 2NF
+
+Syarat 2NF: memenuhi 1NF dan seluruh atribut bukan kunci bergantung penuh pada seluruh kunci utama. Ketergantungan parsial dipisah ke tabel baru.
+
+### 4.1 Analisis Ketergantungan Fungsional
+
+Kunci komposit: (peminjaman_id, buku_id).
+
+| Ketergantungan | Jenis | Atribut |
+| --- | --- | --- |
+| peminjaman_id → ... | Parsial (hanya sebagian kunci) | nim, nama_mhs, program_studi, nomor_hp, tanggal_pinjam, tanggal_jatuh_tempo |
+| buku_id → ... | Parsial (hanya sebagian kunci) | isbn, judul, pengarang, tahun_terbit, penerbit_id, nama_penerbit, kota_penerbit |
+| (peminjaman_id, buku_id) → ... | Penuh | tanggal_kembali, denda |
+
+### 4.2 Hasil 2NF
+
+**Tabel `peminjaman`** (PK: peminjaman_id)
+
+| peminjaman_id | nim | nama_mhs | program_studi | nomor_hp | tanggal_pinjam | tanggal_jatuh_tempo |
+| --- | --- | --- | --- | --- | --- | --- |
+| P001 | D121241017 | Fikri | Teknik Informatika | 081234567801 | 2026-09-01 | 2026-09-15 |
+| P002 | D121241034 | Naufal | Teknik Informatika | 082145678902 | 2026-09-03 | 2026-09-17 |
+| P003 | D121241017 | Fikri | Teknik Informatika | 081234567801 | 2026-09-20 | 2026-10-04 |
+
+**Tabel `buku`** (PK: buku_id)
+
+| buku_id | isbn | judul | pengarang | tahun_terbit | penerbit_id | nama_penerbit | kota_penerbit |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| B001 | 9786238100123 | Pemrograman Web Dasar | Rizky Maulana | 2022 | T001 | Cakrawala Ilmu | Jakarta |
+| B002 | 9786238100451 | Algoritma dan Struktur Data | Nadia Prameswari | 2021 | T002 | Pustaka Inovasi | Makassar |
+| B003 | 9786238100789 | Basis Data Relasional | Yoga Kurniawan | 2023 | T001 | Cakrawala Ilmu | Jakarta |
+
+**Tabel `detail_peminjaman`** (PK komposit: peminjaman_id + buku_id)
+
+| peminjaman_id | buku_id | tanggal_kembali | denda |
+| --- | --- | --- | --- |
+| P001 | B001 | 2026-09-10 | 0 |
+| P001 | B002 | 2026-09-18 | 3000 |
+| P002 | B001 | 2026-09-14 | 0 |
+| P003 | B003 | NULL | 0 |
+
+Permasalahan yang masih ditemukan adalah ketergantungan transitif.
+
+- Pada `peminjaman`: `nim` → `nama_mhs`, `program_studi`, `nomor_hp`. Atribut mahasiswa bergantung pada `nim`, bukan pada `peminjaman_id`.
+- Pada `buku`: `penerbit_id` → `nama_penerbit`, `kota_penerbit`. Atribut penerbit bergantung pada `penerbit_id`, bukan pada `buku_id`.
