@@ -24,3 +24,27 @@ Dirancang basis data relasional untuk sistem peminjaman buku perpustakaan kampus
 6. Pengembalian dicatat per buku. Nilai `tanggal_kembali` yang masih `NULL` berarti buku belum dikembalikan.
 7. Denda keterlambatan sebesar Rp1.000 per hari per buku, dicatat saat buku dikembalikan.
 8. Data historis peminjaman wajib dipertahankan, sehingga penghapusan mahasiswa, buku, atau penerbit yang masih memiliki data terkait ditolak.
+
+## 2. Identifikasi Entitas, Atribut, dan Relasi
+
+### 2.1 Entitas dan Atribut
+
+| Entitas | Atribut | Primary Key (PK) | Foreign Key (FK) |
+| --- | --- | --- | --- |
+| Penerbit | penerbit_id, nama_penerbit, kota_penerbit | penerbit_id | - |
+| Buku | buku_id, isbn, judul, pengarang, tahun_terbit, stok, penerbit_id | buku_id | penerbit_id |
+| Mahasiswa | nim, nama_mhs, program_studi, nomor_hp | nim | - |
+| Peminjaman (Transaksi) | peminjaman_id, nim, tanggal_pinjam, tanggal_jatuh_tempo | peminjaman_id | nim |
+| Detail Peminjaman | peminjaman_id, buku_id, tanggal_kembali, denda | peminjaman_id + buku_id (komposit) | peminjaman_id, buku_id |
+
+Entitas **Detail Peminjaman** muncul sebagai hasil normalisasi pada Bagian 3 sampai 5. Entitas ini menjadi tabel penghubung relasi many-to-many antara Peminjaman dan Buku.
+
+### 2.2 Relasi dan Kardinalitas
+
+| Relasi | Entitas Induk | Entitas Anak | Kardinalitas | Keterangan |
+| --- | --- | --- | --- | --- |
+| menerbitkan | Penerbit | Buku | 1 : N | Satu penerbit menerbitkan banyak buku |
+| melakukan | Mahasiswa | Peminjaman | 1 : N | Satu mahasiswa melakukan banyak transaksi |
+| memuat | Peminjaman | Detail Peminjaman | 1 : N | Satu transaksi memuat satu atau lebih buku |
+| dipinjam dalam | Buku | Detail Peminjaman | 1 : N | Satu buku dapat muncul di banyak transaksi |
+| (turunan) | Peminjaman dan Buku | - | M : N | Diselesaikan melalui tabel `detail_peminjaman` |
