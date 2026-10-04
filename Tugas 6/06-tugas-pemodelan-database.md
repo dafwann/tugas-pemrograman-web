@@ -300,3 +300,48 @@ erDiagram
 
 Pembacaan notasi: `||` berarti tepat satu, `o{` berarti nol atau banyak, dan `|{` berarti satu atau banyak.
 
+## 8. Diagram Alur Relasi Kunci (Teks)
+
+```text
+penerbit
+  penerbit_id (PK) ... nama_penerbit, kota_penerbit
+        ^
+        |  1 : N
+buku
+  buku_id (PK) ....... isbn, judul, pengarang, tahun_terbit, stok
+  penerbit_id (FK) --- penerbit.penerbit_id
+        ^
+        |  1 : N
+detail_peminjaman
+  peminjaman_id (PK, FK) --- peminjaman.peminjaman_id
+  buku_id (PK, FK) -------- buku.buku_id
+  tanggal_kembali, denda
+        |
+        |  N : 1
+        v
+peminjaman
+  peminjaman_id (PK) . tanggal_pinjam, tanggal_jatuh_tempo
+  nim (FK) ----------- mahasiswa.nim
+        |
+        |  N : 1
+        v
+mahasiswa
+  nim (PK) ........... nama_mhs, program_studi, nomor_hp
+```
+
+Catatan pembacaan:
+
+- `detail_peminjaman` adalah tabel penghubung relasi many-to-many antara `peminjaman` dan `buku`.
+- Primary Key komposit `detail_peminjaman` mencegah buku yang sama tercatat dua kali dalam satu transaksi.
+- Perubahan data penerbit atau mahasiswa cukup dilakukan pada satu baris di tabel induknya.
+- Setiap Foreign Key wajib merujuk nilai yang benar-benar ada di tabel induk.
+
+### 6.3 Penjelasan Diagram
+
+Diagram ERD menunjukkan hubungan antara lima entitas utama, yaitu `penerbit`, `buku`, `mahasiswa`, `peminjaman`, dan `detail_peminjaman`. Setiap penerbit dapat menerbitkan banyak buku, sedangkan setiap buku hanya memiliki satu penerbit. Hubungan tersebut direpresentasikan melalui `penerbit_id` sebagai Foreign Key pada tabel `buku`.
+
+Satu mahasiswa dapat melakukan banyak transaksi peminjaman, sedangkan setiap transaksi hanya dilakukan oleh satu mahasiswa. Relasi ini menggunakan `nim` sebagai Foreign Key pada tabel `peminjaman`. Setiap transaksi peminjaman dapat memiliki satu atau lebih detail peminjaman.
+
+Relasi antara `peminjaman` dan `buku` bersifat many-to-many dan diselesaikan melalui tabel `detail_peminjaman`. Tabel tersebut menggunakan Primary Key komposit `(peminjaman_id, buku_id)` sehingga satu buku tidak dapat dicatat dua kali dalam transaksi yang sama.
+
+Secara keseluruhan, ERD menggambarkan struktur basis data yang telah dinormalisasi hingga 3NF. Pemisahan entitas dan penggunaan Primary Key serta Foreign Key membantu mengurangi redundansi dan menjaga integritas data antar tabel.
