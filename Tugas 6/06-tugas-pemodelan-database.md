@@ -121,3 +121,66 @@ Permasalahan yang masih ditemukan adalah ketergantungan transitif.
 
 - Pada `peminjaman`: `nim` → `nama_mhs`, `program_studi`, `nomor_hp`. Atribut mahasiswa bergantung pada `nim`, bukan pada `peminjaman_id`.
 - Pada `buku`: `penerbit_id` → `nama_penerbit`, `kota_penerbit`. Atribut penerbit bergantung pada `penerbit_id`, bukan pada `buku_id`.
+
+## 5. Normalisasi 3NF
+
+Syarat 3NF: memenuhi 2NF dan tidak ada atribut bukan kunci yang bergantung pada atribut bukan kunci lainnya. Atribut yang bergantung transitif dipisahkan ke tabel tersendiri.
+
+### 5.1 Analisis Ketergantungan Transitif
+
+| Tabel 2NF | Ketergantungan Transitif | Solusi |
+| --- | --- | --- |
+| peminjaman | peminjaman_id → nim → (nama_mhs, program_studi, nomor_hp) | Pisahkan menjadi tabel `mahasiswa` dengan PK `nim` |
+| buku | buku_id → penerbit_id → (nama_penerbit, kota_penerbit) | Pisahkan menjadi tabel `penerbit` dengan PK `penerbit_id` |
+
+### 5.2 Hasil 3NF
+
+| Tabel | Kunci Utama | Foreign Key | Kolom Data |
+| --- | --- | --- | --- |
+| penerbit | penerbit_id | - | nama_penerbit, kota_penerbit |
+| buku | buku_id | penerbit_id | isbn, judul, pengarang, tahun_terbit, stok |
+| mahasiswa | nim | - | nama_mhs, program_studi, nomor_hp |
+| peminjaman | peminjaman_id | nim | tanggal_pinjam, tanggal_jatuh_tempo |
+| detail_peminjaman | peminjaman_id + buku_id | peminjaman_id, buku_id | tanggal_kembali, denda |
+
+### 5.2.1 Contoh Data Setelah Normalisasi 3NF
+
+#### Tabel `penerbit`
+
+| penerbit_id | nama_penerbit | kota_penerbit |
+| --- | --- | --- |
+| T001 | Cakrawala Ilmu | Jakarta |
+| T002 | Pustaka Inovasi | Makassar |
+
+#### Tabel `mahasiswa`
+
+| nim | nama_mhs | program_studi | nomor_hp |
+| --- | --- | --- | --- |
+| D121241017 | Fikri | Teknik Informatika | 081234567801 |
+| D121241034 | Naufal | Teknik Informatika | 082145678902 |
+
+#### Tabel `buku`
+
+| buku_id | isbn | judul | pengarang | tahun_terbit | stok | penerbit_id |
+| --- | --- | --- | --- | --- | --- | --- |
+| B001 | 9786238100123 | Pemrograman Web Dasar | Rizky Maulana | 2022 | 5 | T001 |
+| B002 | 9786238100451 | Algoritma dan Struktur Data | Nadia Prameswari | 2021 | 3 | T002 |
+| B003 | 9786238100789 | Basis Data Relasional | Yoga Kurniawan | 2023 | 4 | T001 |
+
+#### Tabel `peminjaman`
+
+| peminjaman_id | nim | tanggal_pinjam | tanggal_jatuh_tempo |
+| --- | --- | --- | --- |
+| P001 | D121241017 | 2026-09-01 | 2026-09-15 |
+| P002 | D121241034 | 2026-09-03 | 2026-09-17 |
+| P003 | D121241017 | 2026-09-20 | 2026-10-04 |
+
+`detail_peminjaman` identik dengan hasil 2NF pada Bagian 4.2.
+
+### 5.3 Pemeriksaan Anomali
+
+| Anomali | Sebelum Normalisasi | Setelah 3NF |
+| --- | --- | --- |
+| Sisip | Penerbit atau buku baru tidak dapat dicatat sebelum ada transaksi peminjaman | Penerbit, buku, dan mahasiswa dapat dimasukkan tanpa transaksi |
+| Hapus | Menghapus satu-satunya transaksi sebuah buku ikut menghilangkan data buku dan penerbitnya | Menghapus transaksi tidak memengaruhi tabel `buku` maupun `penerbit` |
+| Pembaruan | Mengubah nomor HP Fikri harus dilakukan pada banyak baris dan berisiko tidak konsisten | Nomor HP Fikri cukup diubah pada satu baris di tabel `mahasiswa` |
