@@ -184,3 +184,69 @@ Syarat 3NF: memenuhi 2NF dan tidak ada atribut bukan kunci yang bergantung pada 
 | Sisip | Penerbit atau buku baru tidak dapat dicatat sebelum ada transaksi peminjaman | Penerbit, buku, dan mahasiswa dapat dimasukkan tanpa transaksi |
 | Hapus | Menghapus satu-satunya transaksi sebuah buku ikut menghilangkan data buku dan penerbitnya | Menghapus transaksi tidak memengaruhi tabel `buku` maupun `penerbit` |
 | Pembaruan | Mengubah nomor HP Fikri harus dilakukan pada banyak baris dan berisiko tidak konsisten | Nomor HP Fikri cukup diubah pada satu baris di tabel `mahasiswa` |
+
+## 6. Rancangan Tabel Akhir
+
+Konvensi penamaan menggunakan `snake_case`, nama tabel berupa kata benda tunggal, dan nama Foreign Key dibuat identik dengan Primary Key pada tabel yang dirujuk. Tipe data dituliskan secara eksplisit beserta panjang atau presisinya apabila relevan.
+
+### 6.1 Tabel `penerbit`
+
+Struktur tabel berikut menunjukkan nama kolom, tipe data, status kunci, constraint, dan fungsi masing-masing atribut.
+
+| Kolom | Tipe Data | Kunci | Constraint | Keterangan |
+| --- | --- | --- | --- | --- |
+| penerbit_id | VARCHAR(10) | PK | NOT NULL | Identitas unik penerbit |
+| nama_penerbit | VARCHAR(100) | - | NOT NULL, UNIQUE | Nama penerbit |
+| kota_penerbit | VARCHAR(50) | - | NOT NULL | Kota kedudukan penerbit |
+
+### 6.2 Tabel `buku`
+
+| Kolom | Tipe Data | Kunci | Constraint | Keterangan |
+| --- | --- | --- | --- | --- |
+| buku_id | VARCHAR(10) | PK | NOT NULL | Identitas unik buku |
+| isbn | CHAR(13) | - | NOT NULL, UNIQUE | ISBN-13 tanpa tanda hubung |
+| judul | VARCHAR(200) | - | NOT NULL | Judul buku |
+| pengarang | VARCHAR(100) | - | NOT NULL | Nama pengarang |
+| tahun_terbit | YEAR | - | NOT NULL | Tahun terbit |
+| stok | SMALLINT UNSIGNED | - | NOT NULL, DEFAULT 0 | Jumlah eksemplar tersedia |
+| penerbit_id | VARCHAR(10) | FK | NOT NULL | Merujuk `penerbit.penerbit_id` |
+
+### 6.3 Tabel `mahasiswa`
+
+| Kolom | Tipe Data | Kunci | Constraint | Keterangan |
+| --- | --- | --- | --- | --- |
+| nim | CHAR(10) | PK | NOT NULL | Nomor induk mahasiswa |
+| nama_mhs | VARCHAR(100) | - | NOT NULL | Nama lengkap mahasiswa |
+| program_studi | VARCHAR(50) | - | NOT NULL | Program studi |
+| nomor_hp | VARCHAR(15) | - | NOT NULL | Nomor telepon seluler mahasiswa |
+
+### 6.4 Tabel `peminjaman`
+
+| Kolom | Tipe Data | Kunci | Constraint | Keterangan |
+| --- | --- | --- | --- | --- |
+| peminjaman_id | VARCHAR(10) | PK | NOT NULL | Identitas unik transaksi |
+| nim | CHAR(10) | FK | NOT NULL | Merujuk `mahasiswa.nim` |
+| tanggal_pinjam | DATE | - | NOT NULL | Tanggal transaksi dilakukan |
+| tanggal_jatuh_tempo | DATE | - | NOT NULL, CHECK (tanggal_jatuh_tempo >= tanggal_pinjam) | Batas pengembalian |
+
+### 6.5 Tabel `detail_peminjaman`
+
+| Kolom | Tipe Data | Kunci | Constraint | Keterangan |
+| --- | --- | --- | --- | --- |
+| peminjaman_id | VARCHAR(10) | PK, FK | NOT NULL | Merujuk `peminjaman.peminjaman_id` |
+| buku_id | VARCHAR(10) | PK, FK | NOT NULL | Merujuk `buku.buku_id` |
+| tanggal_kembali | DATE | - | NULL | `NULL` berarti belum dikembalikan |
+| denda | DECIMAL(10,2) | - | NOT NULL, DEFAULT 0, CHECK (denda >= 0) | Denda keterlambatan dalam rupiah |
+
+Primary Key komposit `(peminjaman_id, buku_id)` mencegah buku yang sama tercatat dua kali dalam satu transaksi.
+
+### 6.6 Aturan Integritas Referensial
+
+| Foreign Key | Merujuk | ON DELETE | ON UPDATE | Alasan |
+| --- | --- | --- | --- | --- |
+| buku.penerbit_id | penerbit.penerbit_id | RESTRICT | CASCADE | Buku tidak boleh kehilangan penerbit |
+| peminjaman.nim | mahasiswa.nim | RESTRICT | CASCADE | Riwayat peminjaman wajib dipertahankan |
+| detail_peminjaman.peminjaman_id | peminjaman.peminjaman_id | CASCADE | CASCADE | Detail tidak bermakna tanpa transaksi induknya |
+| detail_peminjaman.buku_id | buku.buku_id | RESTRICT | CASCADE | Buku yang pernah dipinjam tidak boleh terhapus |
+
+`CASCADE` pada penghapusan mahasiswa sengaja dihindari karena akan menghapus seluruh riwayat peminjaman secara berantai dan tidak dapat dipulihkan.
