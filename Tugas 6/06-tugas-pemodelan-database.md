@@ -345,3 +345,8 @@ Satu mahasiswa dapat melakukan banyak transaksi peminjaman, sedangkan setiap tra
 Relasi antara `peminjaman` dan `buku` bersifat many-to-many dan diselesaikan melalui tabel `detail_peminjaman`. Tabel tersebut menggunakan Primary Key komposit `(peminjaman_id, buku_id)` sehingga satu buku tidak dapat dicatat dua kali dalam transaksi yang sama.
 
 Secara keseluruhan, ERD menggambarkan struktur basis data yang telah dinormalisasi hingga 3NF. Pemisahan entitas dan penggunaan Primary Key serta Foreign Key membantu mengurangi redundansi dan menjaga integritas data antar tabel.
+
+## 9. Kesimpulan
+
+Basis data `e_library` terdiri atas lima tabel, yaitu `penerbit`, `mahasiswa`, `buku`, `peminjaman`, dan `detail_peminjaman`, yang telah dinormalisasi hingga 3NF. Struktur ini memisahkan data berdasarkan ketergantungan fungsional, menggunakan Primary Key dan Foreign Key untuk menjaga integritas referensial, serta mendukung pencatatan peminjaman dan pengembalian buku secara konsisten.
+
