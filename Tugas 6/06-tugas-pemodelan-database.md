@@ -250,3 +250,53 @@ Primary Key komposit `(peminjaman_id, buku_id)` mencegah buku yang sama tercatat
 | detail_peminjaman.buku_id | buku.buku_id | RESTRICT | CASCADE | Buku yang pernah dipinjam tidak boleh terhapus |
 
 `CASCADE` pada penghapusan mahasiswa sengaja dihindari karena akan menghapus seluruh riwayat peminjaman secara berantai dan tidak dapat dipulihkan.
+
+## 7. Diagram ERD (Mermaid)
+
+```mermaid
+erDiagram
+    PENERBIT ||--o{ BUKU : menerbitkan
+    MAHASISWA ||--o{ PEMINJAMAN : melakukan
+    PEMINJAMAN ||--|{ DETAIL_PEMINJAMAN : memuat
+    BUKU ||--o{ DETAIL_PEMINJAMAN : dipinjam_dalam
+
+    PENERBIT {
+        varchar(10) penerbit_id PK
+        varchar(100) nama_penerbit
+        varchar(50) kota_penerbit
+    }
+
+    BUKU {
+        varchar(10) buku_id PK
+        char(13) isbn
+        varchar(200) judul
+        varchar(100) pengarang
+        year tahun_terbit
+        smallint stok
+        varchar(10) penerbit_id FK
+    }
+
+    MAHASISWA {
+        char(10) nim PK
+        varchar(100) nama_mhs
+        varchar(50) program_studi
+        varchar(15) nomor_hp
+    }
+
+    PEMINJAMAN {
+        varchar(10) peminjaman_id PK
+        char(10) nim FK
+        date tanggal_pinjam
+        date tanggal_jatuh_tempo
+    }
+
+    DETAIL_PEMINJAMAN {
+        varchar(10) peminjaman_id PK, FK
+        varchar(10) buku_id PK, FK
+        date tanggal_kembali
+        decimal(10,2) denda
+    }
+```
+
+Pembacaan notasi: `||` berarti tepat satu, `o{` berarti nol atau banyak, dan `|{` berarti satu atau banyak.
+
