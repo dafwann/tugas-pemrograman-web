@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 try {
     $daftarPesan = $guestBook->ambilSemua();
 } catch (PDOException $e) {
+
     $daftarPesan = [];
     $galat['umum'] = 'Terjadi kesalahan saat mengambil data.';
 }
@@ -167,9 +168,9 @@ try {
             <?php if (empty($daftarPesan)): ?>
                 <tr><td colspan="5" class="kosong">Belum ada pesan.</td></tr>
             <?php else: ?>
-                <?php foreach ($daftarPesan as $i => $baris): ?>
+                <?php foreach ($daftarPesan as $baris): ?>
                     <tr>
-                        <td><?= $i + 1 ?></td>
+                        <td><?= (int) $baris['id'] ?></td>
                         <td><?= e($baris['nama']) ?></td>
                         <td><?= e($baris['email']) ?></td>
                         <td><?= nl2br(e($baris['pesan'])) ?></td>
