@@ -49,4 +49,32 @@ class GuestBook
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Validasi masukan. Mengembalikan array pesan galat per kolom.
+     *
+     * @return array<string, string>
+     */
+    public static function validasi(string $nama, string $email, string $pesan): array
+    {
+        $galat = [];
+
+        if ($nama === '') {
+            $galat['nama'] = 'Nama tidak boleh kosong.';
+        } elseif (mb_strlen($nama) > 100) {
+            $galat['nama'] = 'Nama maksimal 100 karakter.';
+        }
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            $galat['email'] = 'Format email tidak valid.';
+        } elseif (mb_strlen($email) > 150) {
+            $galat['email'] = 'Email maksimal 150 karakter.';
+        }
+
+        if (mb_strlen($pesan) < 5) {
+            $galat['pesan'] = 'Pesan minimal 5 karakter.';
+        }
+
+        return $galat;
+    }
 }
